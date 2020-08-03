@@ -1,0 +1,890 @@
+@import './variables.scss';
+
+@import './animation.scss';
+
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+input,
+button,
+textarea,
+p,
+blockquote,
+th,
+td,
+form,
+pre {
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+}
+
+
+body {
+    .im-chat {
+        border: 1px solid #D9D9D9;
+        border-color: rgba(0, 0, 0, .05);
+        background-repeat: no-repeat;
+        background-color: $chat;
+        color: #333;
+        font-family: \5FAE\8F6F\96C5\9ED1;
+
+        .im-layer-content {
+            overflow: visible;
+            background: 0 0,
+
+        }
+
+        & cite,
+        & em {
+            font-style: normal
+        }
+
+        .im-layer-title {
+            height: 80px;
+            // border-bottom: none;
+            border-bottom: solid 1px #E7E7E7;
+            background-color: $title;
+        }
+    }
+
+}
+
+
+
+.im-box,
+.im-box * {
+    -webkit-box-sizing: content-box !important;
+    -moz-box-sizing: content-box !important;
+    box-sizing: content-box !important;
+}
+
+.layui-show {
+    display: block !important;
+}
+
+.layui-hide {
+    display: none !important;
+}
+
+.im-layer-content {
+    padding: 0;
+    background-color: $content;
+    color: #666;
+    box-shadow: none;
+    position: relative;
+    overflow: auto;
+}
+
+
+.im-icon {
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    &:hover {
+        color: $btnHover;
+    }
+}
+
+/* 三角形 */
+.icon-edge {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: dashed;
+    border-color: transparent;
+    overflow: hidden;
+}
+
+
+
+
+/* 窗口栏 */
+.dialog-layer-title {
+    padding: 0 80px 0 20px;
+    height: 42px;
+    line-height: 42px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    color: #333;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    background-color: #F8F8F8;
+    border-radius: 2px 2px 0 0;
+}
+
+//  这个是 winodw 的关闭按钮那些操作
+.im-box-setwin {
+    position: absolute;
+    right: 8px;
+    *right: 0;
+    top: 15px;
+    font-size: 0;
+    line-height: initial;
+
+    a {
+        position: relative;
+        width: 16px;
+        height: 16px;
+        margin-left: 10px;
+        font-size: 12px;
+        _overflow: hidden;
+        display: inline-block;
+        *display: inline;
+        *zoom: 1;
+        vertical-align: top;
+    }
+
+    /* 最小化按钮 */
+    .im-btn-min {
+        display: inline-block;
+
+        cite {
+            position: absolute;
+            width: 0;
+            height: 2px;
+            left: 0;
+            top: 50%;
+            margin-top: -1px;
+            padding: 0px 10px 0px 10px;
+            background-color: #2E2D3C;
+            cursor: pointer;
+            _overflow: hidden;
+        }
+    }
+
+
+    .im-btn-min:hover cite {
+        background-color: $btnHover;
+    }
+
+    /* 最大化按钮 */
+    .im-icon-max {
+        background-position: -32px -40px;
+
+        &:hover {
+            background-position: -16px -40px;
+        }
+    }
+
+
+    /* 关闭按钮 */
+    .im-icon-close {
+        background-position: 0 -40px;
+        cursor: pointer;
+
+        &:hover {
+            opacity: 0.7;
+        }
+    }
+
+    .im-icon-resize {
+        background-position: -32px -40px;
+
+        &:hover {
+            background-color: $btnHover;
+        }
+    }
+
+}
+
+
+//矢量图
+.im-ico {
+    background: url(icon.png) no-repeat;
+}
+
+
+
+
+
+
+
+
+
+//im
+
+
+//tabs
+.im-chat-tabs {
+    display: none;
+    position: absolute;
+    z-index: 1000;
+    top: -80px;
+    width: 200px;
+    // height: 100%;
+    background-color: $tabsbox;
+    overflow: hidden;
+    font-size: 0;
+    // 宽 440+ 80
+    height: 520px;
+    display: block;
+
+    &:hover {
+        overflow-y: auto;
+    }
+
+    // pane 页面收缩后tabx才会有阴影
+    &.tabs-shadow {
+        -webkit-box-shadow: 1px 1px 50px rgba(0, 0, 0, 0.3);
+        box-shadow: 1px 1px 50px rgba(0, 0, 0, 0.3);
+    }
+
+
+    li {
+        display: inline-block;
+        *display: inline;
+        *zoom: 1;
+        vertical-align: top;
+        font-size: 14px;
+        position: relative;
+        margin: 5px;
+        padding: 5px 30px 5px 5px;
+        line-height: 40px;
+        cursor: pointer;
+        border-radius: 3px;
+        white-space: nowrap;
+
+        &:hover {
+            background-color: $tabHover;
+
+            .im-icon {
+                display: inline-block;
+
+                &:hover {
+                    color: $btnHover;
+                }
+            }
+        }
+
+        &.im-tabs-title {
+            background-color: $tabsTitle;
+
+            .im-box-setwin {
+                right: 33px;
+
+                .im-btn-min cite {
+                    width: 25px;
+                }
+            }
+
+            &.active {
+                height: 50px;
+                width: 100%;
+                padding: 0;
+                margin: 0;
+                z-index: 1;
+            }
+
+            .im-icon {
+
+                // display: inline;
+                .chat-box-show2 {
+                    right: 12px;
+                }
+            }
+        }
+
+        &.im-this {
+            background-color: $tabActicve;
+        }
+
+        .im-icon {
+            display: none;
+            position: absolute;
+            right: 5px;
+            top: 15px;
+            color: #555;
+            font-size: 18px;
+
+            &.btn-pane-show {
+                top: 12px;
+                font-size: 26px;
+            }
+        }
+
+        span {
+            width: 100px;
+            padding-left: 10px;
+            font-size: 16px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: inline-block;
+
+            cite {
+                color: #999;
+                padding-left: 10px;
+            }
+        }
+
+
+        img {
+            width: 40px;
+            height: 40px;
+            border-radius: 100%;
+        }
+    }
+}
+
+
+
+
+
+
+// 聊天主体css
+.im-chat-main {
+    margin-left: 200px;
+
+    // 窗口 
+    .im-pane-item {
+        display: none;
+        position: relative;
+        background-color: $pane;
+        // background-color: rgba(255, 255, 255, .9);
+
+        &.show {
+            display: block !important;
+        }
+    }
+
+
+    // 用户信息框
+    .im-chat-userlist {
+        float: right;
+        // width: $userlistWidt;
+        width: 188px;
+        height: 438px;
+        border: solid 1px #EAEAEA;
+        display: none;
+
+
+        &.listActive {
+            display: inline-block !important;
+        }
+
+        .im-chat-list-title {
+            padding: 0px 10px 0 10px;
+
+            .im-chat-list-count {
+                display: block;
+                padding: 5px 0 5px 0;
+            }
+        }
+
+
+        .im-chat-input {
+            position: relative;
+            font-size: 14px;
+            display: inline-block;
+
+
+            .im-chat-search {
+                border: none;
+                padding: 5px;
+                width: 153px;
+                padding-left: 20px;
+            }
+
+            .im-chat-search-prefix {
+                position: absolute;
+                left: 2px;
+                top: 3px;
+                color: #c0c4cc;
+
+                .im-icon {
+                    font-size: 18px;
+                }
+            }
+        }
+
+
+
+
+
+
+        ul li {
+            list-style-type: none;
+            padding: 5px;
+
+            &.active,
+            &.active:hover {
+                background-color: #cecece;
+            }
+
+            &:hover {
+                background-color: #f5f5f5;
+            }
+        }
+    }
+
+
+    // 群组名
+    .im-chat-title {
+        position: absolute;
+        top: -80px;
+        height: 80px;
+
+        // 名称栏
+        .im-chat-info {
+            position: relative;
+            top: 15px;
+            left: 15px;
+            padding-left: 60px;
+            cursor: default;
+
+            //头像
+            img {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 50px;
+                height: 50px;
+                border-radius: 100%
+            }
+
+            .im-chat-username {
+                position: relative;
+                top: 5px;
+                font-size: 18px
+            }
+
+            .im-chat-group {
+                margin-top: 6px;
+                font-size: 14px;
+                color: #FF5722;
+            }
+
+            .im-chat-status {
+                margin-top: 6px;
+                font-size: 14px;
+                color: #999;
+
+                .online {
+                    color: #FF5722;
+                }
+            }
+
+            .im-chat-msg {
+                font-size: 25px;
+                position: relative;
+                top: -30px;
+                /* display: inherit; */
+                left: 139px;
+                color: #FF5722;
+                font-weight: bold;
+            }
+        }
+    }
+
+    //聊天框
+    .im-chat-content {
+        height: 262px;
+        padding: 15px 15px 5px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        height: 262px;
+        background-color: $content;
+
+
+
+        .im-chat-btn-expand {
+            display: inline-block;
+            width: 14px;
+            height: 28px;
+            border-radius: 18px 0 0 18px;
+            background-color: #cecece;
+            position: relative;
+            right: 0;
+            position: absolute;
+
+            &:hover {
+                background-color: #49A8FF;
+            }
+
+            &.close {
+                border-radius: 0 18px 18px 0;
+                right: 175px;
+            }
+
+            .im-icon {
+                position: absolute;
+                top: 5px;
+                color: #fff;
+            }
+        }
+
+        ul {
+            li {
+                position: relative;
+                font-size: 0;
+                margin-bottom: 10px;
+                padding-left: 60px;
+                min-height: 68px
+            }
+
+            //系统
+            .im-content-system {
+                min-height: 0;
+                padding: 0
+            }
+
+
+            .content-text,
+            .content-user {
+                display: inline-block;
+                *display: inline;
+                *zoom: 1;
+                vertical-align: top;
+                font-size: 14px
+            }
+
+
+            //用户信息
+            .content-user {
+                position: absolute;
+                left: 3px;
+
+                img {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 100%;
+                }
+
+                cite {
+                    position: absolute;
+                    top: -2px;
+                    width: 500px;
+                    line-height: 24px;
+                    font-size: 12px;
+                    white-space: nowrap;
+                    color: #999;
+                    font-style: normal;
+
+                    i {
+                        padding-left: 0;
+                        padding-right: 15px;
+                        padding-left: 15px;
+                        font-style: normal
+                    }
+                }
+            }
+
+            // 消息内容
+            .content-text {
+                position: relative;
+                line-height: 22px;
+                margin-top: 25px;
+                padding: 8px 15px;
+                background-color: $otherText;
+                border-radius: 3px;
+                color: $contentText;
+                word-break: break-all;
+                max-width: 462px;
+
+                border: solid 1px #EDEDED;
+
+                &:after {
+                    content: '';
+                    position: absolute;
+                    left: -10px;
+                    top: 13px;
+                    width: 0;
+                    height: 0;
+                    border-style: solid dashed dashed;
+                    border-color: $otherText transparent transparent;
+                    overflow: hidden;
+                    border-width: 10px
+                }
+
+                a {
+                    color: $contentText;
+                }
+
+                img {
+                    max-width: 100%;
+                    vertical-align: middle
+                }
+
+                &:hover {
+                    background-color: $otherTextHvoer;
+
+                    &:after {
+                        border-color: $otherTextHvoer
+                    }
+                }
+
+
+            }
+
+            //  自己发送的消息
+            .content-mine {
+                text-align: right;
+                padding-left: 0;
+                padding-right: 60px;
+
+                // 头像信息
+                .content-user {
+                    left: auto;
+                    right: 3px;
+
+                    cite {
+                        left: auto;
+                        right: 60px;
+                        text-align: right;
+
+                        i {
+                            padding-left: 0;
+                            padding-right: 15px
+                        }
+                    }
+                }
+
+                //文字内容
+                .content-text {
+                    margin-left: 0;
+                    background-color: $mineText;
+                    color: $contentText;
+
+                    &:after {
+                        left: auto;
+                        right: -10px;
+                        border-top-color: $mineText;
+
+                    }
+
+                    a {
+                        color: $contentText;
+                    }
+
+                    &:hover {
+                        background-color: $mineTextHover;
+
+                        &:after {
+                            border-color: $mineTextHover transparent transparent;
+                        }
+                    }
+
+                }
+
+            }
+        }
+    }
+
+
+    // 输入框部分
+    .im-chat-footer {
+        border-top: 1px solid #F1F1F1;
+
+        &.listActive {
+            width: $foolterWidth;
+        }
+
+        //工具栏
+        .im-chat-toolbar {
+            position: relative;
+            padding: 0 8px;
+            height: 38px;
+            line-height: 38px;
+            font-size: 0;
+
+            span {
+                position: relative;
+                margin: 0 10px;
+                display: inline-block;
+                *display: inline;
+                *zoom: 1;
+                vertical-align: top;
+                font-size: 24px;
+                cursor: pointer;
+            }
+        }
+
+        //输入框
+        .im-chat-textarea {
+            margin-left: 10px;
+
+            & textarea {
+                display: block;
+                width: 100%;
+                padding: 5px 0 0;
+                height: 68px;
+                line-height: 20px;
+                border: none;
+                overflow: auto;
+                resize: none;
+                background: 0 0;
+            }
+
+            & textarea:focus {
+                outline: 0
+            }
+        }
+
+        //按钮栏
+        .im-chat-bottom {
+            position: relative;
+            height: 46px;
+
+            //发送按钮
+            .im-chat-btn-bar {
+                position: absolute;
+                right: 15px;
+                top: 3px;
+                height: 32px;
+                line-height: 32px;
+                font-size: 0;
+                cursor: pointer;
+
+                span {
+                    display: inline-block;
+                    *display: inline;
+                    *zoom: 1;
+                    vertical-align: top;
+                    font-size: 14px;
+                    line-height: 32px;
+                    margin-left: 5px;
+                    padding: 0 20px;
+                    background-color: $btn;
+                    color: $btnColor;
+                    border-radius: 3px;
+
+                    &:hover {
+                        background-color: $btnHover;
+                        color: $btnHoverColor;
+                    }
+                }
+
+                .im-btn-send {
+                    border-radius: 3px 0 0 3px
+                }
+
+                .im-send-set {
+                    position: relative;
+                    width: 30px;
+                    height: 32px;
+                    margin-left: 0;
+                    padding: 0;
+                    border-left: 1px solid $btn;
+                    border-radius: 0 3px 3px 0;
+
+                    .icon-edge {
+                        position: absolute;
+                        top: 14px;
+                        left: 9px;
+                        border-width: 6px;
+                        border-top-style: solid;
+                        border-top-color: $btnColor;
+
+                    }
+
+                    &:hover .icon-edge {
+                        border-top-color: $btnHoverColor;
+                    }
+                }
+
+                //下拉菜单
+                .im-menu-box {
+                    left: auto;
+                    right: -81px;
+                    top: 33px;
+                    width: 180px;
+                    padding: 10px 0;
+
+                    li {
+                        padding-right: 15px;
+                        line-height: 28px;
+
+                    }
+
+                }
+            }
+
+        }
+    }
+
+}
+
+
+// 下拉栏
+.im-menu-box {
+    display: none;
+    position: absolute;
+    z-index: 100;
+    top: 24px;
+    left: -31px;
+    padding: 5px 0;
+    width: 85px;
+    border: 1px solid #E2E2E2;
+    border-radius: 2px;
+    background-color: #fff;
+    box-shadow: 1px 1px 20px rgba(0, 0, 0, .1);
+
+    li {
+        list-style: none;
+        position: relative;
+        line-height: 22px;
+        padding-left: 30px;
+        font-size: 12px;
+
+        &:hover {
+            background-color: #eee
+        }
+
+        cite {
+            padding-right: 5px;
+            font-size: 14px;
+        }
+
+        i {
+            display: none;
+            position: absolute;
+            left: 8px;
+            top: 7px;
+            font-weight: 700;
+            color: #5FB878;
+        }
+    }
+
+    .im-this i {
+        display: block
+    }
+}
+
+
+
+.im-layer {
+    position: fixed;
+    _position: absolute;
+    pointer-events: auto;
+    border-radius: 2px;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-duration: .3s;
+    animation-duration: .3s;
+    top: 150px;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+    -webkit-background-clip: content;
+}
+
+
+
+
+//单呼效果
