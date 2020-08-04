@@ -244,7 +244,7 @@ export default {
       return (
         <li class={{ "content-mine": item.mine }}>
           <div class="content-user">
-            <img src={constant.avatar_terminal} />
+            <img src={item.avatar} />
             <cite>
               {leftName}
               <i>{tiem}</i> {rightName}

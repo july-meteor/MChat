@@ -3,13 +3,11 @@
 
 import MChat from './Chat'
 import MChatPage from './ChatInterface'
+import EventHub from '../utils/eventHub'
 
 
 
-
-const components = [MChat,MChatPage]
-
-
+const components = [MChat, MChatPage]
 
 
 
@@ -22,7 +20,8 @@ const install = function (Vue, opts = {}) {
         //自动挂载
     });
     // 
-    // Vue.prototype.$busi = busi
+    //观察者
+    Vue.prototype.$im = EventHub
 };
 
 

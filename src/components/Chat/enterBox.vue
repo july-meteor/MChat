@@ -15,6 +15,7 @@ export default {
     return {
       content: undefined,
       recording: false,
+      
     };
   },
   methods: {
@@ -31,8 +32,8 @@ export default {
       //     content: this.content , // 内容
       //     timestamp: new Date() //发起的时间戳
       // };
-      this.content = undefined;
-      this.$emit("submit", msg);
+   
+      this.$emit("submit",  this.content);
       this.$nextTick(() => {
         this.content = "";
       });

@@ -28,45 +28,50 @@ export default {
   methods: {
     handleScroll(event) {
       this.stickyTop = event.target.scrollTop;
-    },``
+    },
+    bindClick(event, data) {
+      this.$emit("click", { event, data });
+    },
   },
   render(h) {
-    let { panes, stickyTop, stickyActive, handleScroll } = this;
+    let { panes, stickyTop, stickyActive, handleScroll, bindClick } = this;
     // 标签组件生成
     const el_chat_tabs = this._l(panes, (pane, index) => {
-      let tabName = pane.name + pane.index + index;
+      const { active, chat } = pane;
+      const { name, id, type, avatar } = chat;
+
+      let tabName = name + id + index;
       pane.index = `${index}`;
       //对话是否激活
-      let active = pane.active;
-      let label = pane.name;
 
-      let type = pane.type;
-      let recordImg = pane.recording
-        ? constant.btnRecording
-        : constant.btnRecord;
+      let label = name;
 
-      const tabindex = pane.active ? 0 : -1;
+      // let recordImg = pane.recording
+      //   ? constant.btnRecording
+      //   : constant.btnRecord;
+
+      const tabindex = active ? 0 : -1;
+
       return (
         <li
-          class={{ "im-this": pane.active }}
+          class={{ "im-this": active }}
           id={`tab-${tabName}`}
           key={`tab-${tabName}`}
           on-click={(ev) => {
-            callTabClick(pane, index, ev);
+            bindClick("tabClick", { pane, ev });
           }}
         >
           <img
-            src={recordImg}
+            src={avatar}
             on-click={(ev) => {
-              callTabClick(pane, index, ev),
-                callRecording(pane, pane.recording, ev);
+              bindClick("tabClick", { pane, ev });
             }}
           />
           <span> {label}</span>
           <i
             class="im-icon el-icon-error"
             on-click={(ev) => {
-              callTabRemove(pane, pane.id, pane.type, ev);
+              bindClick("tabRemove", { pane, ev });
             }}
           ></i>
         </li>

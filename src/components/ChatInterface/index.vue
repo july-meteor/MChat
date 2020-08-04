@@ -36,25 +36,71 @@ export default {
         callback: () => {},
       }),
     },
-    list: {
-      type: Array,
-      default: () => [],
-    },
-    value: {
-      default: "",
-    },
   },
   data() {
     return {
       panes: [],
-      msg: "",
-      selected:'0',
+      selected: "0",
     };
   },
 
   methods: {
-    handleEnter(msg) {
-      this.$emit("enter", msg);
+    // 收到消息
+    handleMessage(message) {
+      this.panes.forEach((item) => {
+        let { chat } = item;
+        if (chat.id != message.id || chat.type != message.type) return;
+        item.getMessage(message);
+      });
+    },
+    handleEnter(chat, content) {
+      const { mine } = this.config;
+      let message = {
+        //自己的信息
+        mine: {
+          id: mine.id,
+          username: mine.username,
+          avatar: mine.avatar,
+          mine: true,
+        },
+        // 目标
+        to: {
+          id: chat.id,
+          name: chat.name,
+          type: chat.type,
+          avatar: chat.avatar,
+        },
+        //内容
+        content,
+        //数据类型
+        type: "text",
+        //发起的时间戳
+        timestamp: new Date(),
+      };
+
+      this.$emit("sendMessage", message);
+    },
+    handleEvent({ event, data }) {
+      switch (event) {
+        case "tabClick":
+          this.handleTabClick(data);
+          break;
+        case "tabRemove":
+          this.handleRemoveChat(data);
+          break;
+        default:
+          break;
+      }
+    },
+    handleTalkEvent(event) {
+      this.$emit("talkEvent", event);
+    },
+    handleTabClick({ pane, docm }) {
+      this.selected = pane.index;
+    },
+    handleRemoveChat({ pane, docm }) {
+      const { name, type, id } = pane.chat;
+      this.handleTalkEvent({ event: "removeChat", data: { id, name, type } });
     },
     handPanesDrag(e) {
       let el = this.$refs.chat;
@@ -90,7 +136,7 @@ export default {
           panes.every((pane, index) => pane === this.panes[index])
         );
         if (isForceUpdate || panesChanged) {
-          this.selected = '0'
+          this.selected = "0";
           this.panes = panes;
         }
       } else if (this.panes.length !== 0) {
@@ -99,32 +145,37 @@ export default {
     },
   },
   render(h) {
-    let { handPanesDrag, list ,panes} = this;
- 
+    let { handPanesDrag, config, panes, handleEvent, handleEnter } = this;
+    const { mine, chats } = config;
+
     // 窗口页面
-    const el_chat_panes = this._l(list, (channle, index) => {
+    const el_chat_panes = this._l(chats, (chat, index) => {
       let lazy = true;
       let data_chat = {
         props: {
-          id: channle.id,
-          name: channle.name,
-          label: channle.name,
-          type: channle.type,
+          chat,
         },
         ref: "MChat",
+        on: {
+          enter: function (content) {
+            handleEnter(chat, content);
+          },
+        },
       };
       return <m-chat {...data_chat}></m-chat>;
     });
     // 标签页面
     const el_chat_tabs = {
-      props:{
+      props: {
         panes,
       },
-         ref: "MChatTabs"
-    }
-
-
-
+      ref: "MChatTabs",
+      on: {
+        click: function (data) {
+          handleEvent(data);
+        },
+      },
+    };
 
     return (
       <div>
@@ -149,7 +200,8 @@ export default {
           ></div>
           <div class="im-layer-tabs im-layer-content">
             <m-chat-tabs {...el_chat_tabs}></m-chat-tabs>
-          {el_chat_panes}</div>
+            {el_chat_panes}
+          </div>
           <span class="im-box-setwin">
             <a class="im-btn-min" href="javascript:;">
               <cite></cite>
@@ -163,13 +215,17 @@ export default {
     );
   },
   created() {
-        // this.chatInitializaiton();
+    // this.chatInitializaiton();
+    // 设定一些监听的事件
+    this.$im.on("getMessage", (msg) => {
+      this.handleMessage(msg);
+    });
   },
   mounted() {
-       this.calcPaneInstances();
+    this.calcPaneInstances();
   },
   updated() {
-       this.calcPaneInstances();
+    this.calcPaneInstances();
   },
 };
 </script>

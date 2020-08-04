@@ -4,6 +4,7 @@ import ElementUI from 'element-ui';
 import MChat from '@/components'
 import 'element-ui/lib/theme-chalk/index.css';
 import './styles/im.scss'
+import './styles/index.scss'
 
 Vue.use(ElementUI)
 

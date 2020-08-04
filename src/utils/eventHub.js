@@ -50,9 +50,9 @@ EventHub.prototype.emit = function (channel, data) {
  *  这是一个跟业务相关的额外扩展
  */
 
-EventHub.prototype.send = function ( data) {
-    this.emit('send',data);
-}
+// EventHub.prototype.send = function ( data) {
+//     this.emit('send',data);
+// }
 
 
 
