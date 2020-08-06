@@ -10,7 +10,12 @@ export default {
     return {
       config: {
         //获取主面板列表信息，下文会做进一步介绍
-        init: {},
+        config: {
+          // 是否有下拉按钮
+          downBtn:true,
+          
+
+        },
         //我的信息
         mine: {
           // 昵称

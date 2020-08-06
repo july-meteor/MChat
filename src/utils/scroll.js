@@ -1,5 +1,8 @@
 'use strict'
 import IScroll from 'iscroll'
+/**
+ * 【中文Api地址】https://iiunknown.gitbooks.io/iscroll-5-api-cn/content/index.html
+ */
 
 class Scroll extends IScroll {
   domPotision = []
@@ -11,16 +14,16 @@ class Scroll extends IScroll {
     super(node, options)
   }
 
-  setPosition (postion, node) {
+  setPosition(postion, node) {
     // this._findDom(postion, node)
     this.addPostion(postion, node)
   }
 
-  get nodePosition () {
+  get nodePosition() {
     return this.domPotision
   }
 
-  get unread () {
+  get unread() {
     let result = 0
     this.domPotision.forEach(i => {
       const { read } = i
@@ -31,14 +34,14 @@ class Scroll extends IScroll {
     return result
   }
 
-  get isTop () {
+  get isTop() {
     let top = false
     let { y } = this
     if (y === 0) top = true
     return top
   }
 
-  addPostion (top, node) {
+  addPostion(top, node) {
     if (!this.domPotision.find(i => {
       if (i.node === node) return i
     })) {
@@ -46,7 +49,7 @@ class Scroll extends IScroll {
     }
   }
 
-  resetTop () {
+  resetTop() {
     const postion = this.domPotision
     if (!postion) return
     const newPosition = postion.map(({ node, read }) => {
@@ -60,12 +63,12 @@ class Scroll extends IScroll {
     index > -1 && this.read(index)
   }
 
-  _findIndex () {
+  _findIndex() {
     const beforeNode = this.beforeNode
     return this.domPotision.findIndex(i => i.node == beforeNode.node)
   }
 
-  read (index) {
+  read(index) {
     const key = index || this.findDom()
     let bottom = this.isBottom
 
@@ -76,14 +79,14 @@ class Scroll extends IScroll {
     })
   }
 
-  get isBottom () {
+  get isBottom() {
     let result = false
     const { y, maxScrollY } = this
     result = Math.abs(y) >= Math.abs(maxScrollY)
     return result
   }
 
-  findDom () {
+  findDom() {
     const { y } = this
     let currentTop = Math.abs(y)
     if (currentTop == 0) return 0
@@ -111,18 +114,18 @@ class Scroll extends IScroll {
     return result
   }
 
-  savePosition () {
+  savePosition() {
     const { y } = this
     this.previousPostion = y
     this.savseCurrentNode()
   }
 
-  savseCurrentNode () {
+  savseCurrentNode() {
     const nodeIndex = this.findDom()
     this.beforeNode = this.domPotision[nodeIndex]
   }
 
-  toBeforePosition () {
+  toBeforePosition() {
     // scrollToElement(el, time, offsetX, offsetY, easing)
     const { node } = this.beforeNode
     this.scrollToElement(node, 0, 0, -30)

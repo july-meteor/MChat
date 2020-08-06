@@ -62,6 +62,30 @@ export default {
         }, 1000);
       }
     },
+    list(newval) {
+      if (newval) {
+        this.$nextTick(() => {
+          setTimeout(() => {
+            let reset = false;
+            if (this.historyLoding) {
+              reset = true;
+              this.closeTopTip();
+              this.$nextTick(() => {
+                this.scroll.toBeforePosition();
+              });
+            }
+            this.load = true;
+            this.childnodeLoad();
+            if (reset) {
+              this.scroll.resetTop();
+            }
+            if (this.scrollType === "scroll") {
+              this.scrollBottom();
+            }
+          }, 300);
+        });
+      }
+    },
     //
     "config.scrollToButton"(newval) {
       if (newval) {
@@ -72,9 +96,9 @@ export default {
     unread(newval) {
       if (newval) {
         this.beforeTitle && this.resetTitle(this.beforeTitle);
-        this.saveTitle();
-        this.changeTitle();
-        this.showBrowser();
+        // this.saveTitle();
+        // this.changeTitle();
+        // this.showBrowser();
       } else {
         this.resetTitle(this.beforeTitle);
       }
@@ -98,14 +122,7 @@ export default {
   },
   methods: {
     /******  滚动条设置 ******/
-    scrollBottom() {
-      if (this.scroll) {
-        this.scroll.refresh();
-        setTimeout(() => {
-          this.scroll.scrollTo(0, this.scroll.maxScrollY, 200);
-        }, 800);
-      }
-    },
+
     createScroll() {
       const that = this;
       const dom = this.$refs.scroller;
@@ -122,36 +139,23 @@ export default {
       dom.addEventListener(
         "ontouchstart" in window ? "touchstart" : "mousedown",
         function (e) {
+          console.log(e);
           e.stopPropagation();
           var target = e.target;
-          // while (target.nodeType != 1) target = target.parentNode;
-          if (target.tagName === "SPAN") {
-            var clipBoardContent = target.innerText;
-            if (!clipBoardContent) return;
-            const input = document.createElement("input");
-            document.body.appendChild(input);
-            input.setAttribute("value", clipBoardContent);
-            input.select();
-            if (document.execCommand("copy")) {
-              document.execCommand("copy");
-              that.$message({
-                message: "复制成功",
-                type: "success",
-              });
-            }
-            document.body.removeChild(input);
-          }
+          console.log(e);
         }
       );
+
       // scroll done callback
       this.scroll.on("scrollEnd", function () {
-        // console.log('scroll')
         that.scrollTop();
+        // console.log(that.historyLoding)
         if (that.historyLoding) return;
         that.scroll.savePosition();
         that.scroll.read();
       });
     },
+
     // 读取 历史记录强行拉动滚动条
     scrollTop() {
       const { isTop } = this.scroll;
@@ -163,19 +167,36 @@ export default {
       }
       this.closeTopTip();
     },
+    scrollUp() {
+      if (this.scroll) {
+        this.scroll.refresh();
+        setTimeout(() => {
+          this.scroll.scrollTo(0, 0, 200);
+        }, 500);
+      }
+    },
+    scrollBottom() {
+      if (this.scroll) {
+        this.scroll.refresh();
+        setTimeout(() => {
+          this.scroll.scrollTo(0, this.scroll.maxScrollY, 200);
+        }, 500);
+      }
+    },
     closeTopTip() {
       this.loadHistory = false;
       this.historyLoding = false;
     },
+    // 看看有几条了
     childnodeLoad() {
       if (this.scrollType === "scroll") return;
       const parent = this.$refs.main;
       if (!parent) return;
       const childs = parent.children;
-      childs.forEach((i) => {
-        const top = i.offsetTop;
-        this.scroll.setPosition(top, i);
-      });
+      for (let el of childs) {
+        const top = el.offsetTop;
+        this.scroll.setPosition(top, el);
+      }
     },
     scrollRefresh() {
       setTimeout(() => {
@@ -230,9 +251,17 @@ export default {
     this.scrollRefresh();
   },
   render(h) {
-    let { list, open, handleOpen } = this;
+    let {
+      list,
+      open,
+      unread,
+      handleOpen,
+      scrollUp,
+      scrollBottom,
+      scrollTop,
+    } = this;
 
-    const recordList = this._l(list, (item, index) => {
+    const el_record_list = this._l(list, (item, index) => {
       let contentHtml = h("div", {
         domProps: {
           innerHTML: Utils.ConvertContext(item.content),
@@ -255,15 +284,24 @@ export default {
       );
     });
 
-    return (
+    const el_history_log = <div>查看更多消息</div>;
+
+    const el_down_button = (
+      <div class="downBtn">
+        <span>{{ unread }}</span>
+      </div>
+    );
+
+    const el_chat_list = (
       <div
         class={{
           "im-chat-content": true,
-          "listActive": false,
+          listActive: false,
         }}
         ref="scroller"
       >
-        <div>查看更多消息</div>
+        <ul ref="main">{el_record_list}</ul>
+
         <span
           on-click={(ev) => handleOpen()}
           class={{
@@ -279,9 +317,80 @@ export default {
             }}
           ></i>
         </span>
-        <ul>{recordList}</ul>
+        <div class="scrollButton" on-click={(ev) => scrollUp()}>
+          <i class="up  el-icon-arrow-up"></i>
+        </div>
+        <div class="scrollButton" on-click={(ev) => scrollBottom()}>
+          <i class="down el-icon-arrow-down"></i>
+        </div>
       </div>
     );
+
+    return el_chat_list;
   },
 };
 </script>
+
+<style >
+.iScrollVerticalScrollbar.iScrollLoneScrollbar {
+  z-index: 1 !important;
+  right: 10px !important;
+  margin-top: 11px;
+  margin-bottom: 11px;
+}
+</style>
+<style  scoped lang="scss">
+.downBtn {
+  position: absolute;
+  cursor: pointer;
+  right: 1rem;
+  width: 2rem;
+  height: 2rem;
+  bottom: 2rem;
+  // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+  &::before {
+    content: "V";
+    position: absolute;
+    background: rgba(204, 204, 204, 0.2);
+    width: 2rem;
+    height: 2rem;
+    line-height: 2rem;
+    text-align: center;
+    border-radius: 50%;
+    top: 60%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  span {
+    background: #409eff;
+    padding: 0.1rem 0.5rem;
+    font-size: 0.7rem;
+    border-radius: 0.5rem;
+    color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.scrollButton {
+  width: 9px;
+  height: 9px;
+  .up {
+    position: absolute;
+    cursor: pointer;
+    right: 5px;
+    top: 0px;
+  }
+  .down {
+    position: absolute;
+    cursor: pointer;
+    right: 5px;
+    bottom: 0px;
+  }
+  &:hover {
+    color: #409eff;
+  }
+}
+</style>
