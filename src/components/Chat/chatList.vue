@@ -96,8 +96,8 @@ export default {
     unread(newval) {
       if (newval) {
         this.beforeTitle && this.resetTitle(this.beforeTitle);
-        // this.saveTitle();
-        // this.changeTitle();
+        this.saveTitle();
+        this.changeTitle();
         // this.showBrowser();
       } else {
         this.resetTitle(this.beforeTitle);
@@ -117,6 +117,7 @@ export default {
     //未读
     unread() {
       const { unread = 0 } = this.scroll || {};
+      this.$emit("messageUnread", unread);
       return unread;
     },
   },
@@ -139,7 +140,6 @@ export default {
       dom.addEventListener(
         "ontouchstart" in window ? "touchstart" : "mousedown",
         function (e) {
-          console.log(e);
           e.stopPropagation();
           var target = e.target;
           console.log(e);
@@ -149,7 +149,7 @@ export default {
       // scroll done callback
       this.scroll.on("scrollEnd", function () {
         that.scrollTop();
-        // console.log(that.historyLoding)
+
         if (that.historyLoding) return;
         that.scroll.savePosition();
         that.scroll.read();

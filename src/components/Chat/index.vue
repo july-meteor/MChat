@@ -1,7 +1,7 @@
 <script>
 /**
  *  聊天的主体采用  rander 方式渲染
- *  带有业务耦合问题  
+ *  带有业务耦合问题
  *  该页面是chat主页面 需要自己维护聊天信息
  */
 import { constant } from "../../const";
@@ -54,25 +54,24 @@ export default {
       // pane index
       index: null,
       // 聊天记录
-      taleList:[],
+      taleList: [],
       //已加载
       loaded: true,
       // 滚动按钮
       scrollToButton: false,
       // 未读
-      unread:0,
+      unread: 0,
     };
   },
   computed: {
     // 是否被激活
     active() {
-       const active = this.rootChat.selected === this.index;
+      const active = this.rootChat.selected === this.index;
       if (active) {
         this.loaded = true;
       }
       return active;
     },
-
   },
   watch: {
     // 滚动
@@ -107,23 +106,21 @@ export default {
       this.$emit("enter", msg);
     },
     // 处理收到的消息
-    getMessage(msg){
-      this.taleList.push(msg)
+    getMessage(msg) {
+      this.taleList.push(msg);
     },
-    // 计算 未读数据 提供给tabs 显示
-    calcUnreadInstances(isForceUpdate = false){
-       let el =  this.$refs.chatList;
-       this.unread =el.unread
-    }
+    handleUnread(count) {
+      if (this.active) {
+        this.unread = 0;
+      } else {
+        this.unread = count;
+      }
+    },
   },
-    mounted() {
-    this.calcUnreadInstances();
-  },
-  updated() {
-    this.calcUnreadInstances();
-  },
+  mounted() {},
+  updated() {},
   render(h) {
-    let { chat,active, taleList, handleEnter } = this;
+    let { chat, active, taleList, handleEnter, handleUnread } = this;
     let { name, type, avatar, id } = chat;
 
     let el_chat, el_chat_titel, data_chat_list, el_chat_footer, el_chat_tool;
@@ -146,6 +143,11 @@ export default {
         list: taleList,
       },
       ref: "chatList",
+      on: {
+        messageUnread: function (count) {
+          handleUnread(count);
+        },
+      },
     };
 
     let data_enter_box = {
@@ -176,7 +178,7 @@ export default {
         <div
           class={{
             "im-pane-item": true,
-            "display": active,
+            display: active,
           }}
         >
           {el_chat_titel}

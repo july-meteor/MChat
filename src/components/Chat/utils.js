@@ -42,6 +42,10 @@ function ConvertContext(content) {
 }
 
 
+
+
+
+
 function ConvertRecord(data) {
     let contenxt = ConvertContext(data.content);
     let tiem = dateFormat(data.timestamp)
@@ -74,6 +78,7 @@ const Utils = {
     ConvertContext,
     dateFormat
 }
+
 
 
 
