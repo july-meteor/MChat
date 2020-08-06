@@ -59,6 +59,8 @@ export default {
       loaded: true,
       // 滚动按钮
       scrollToButton: false,
+      // 未读
+      unread:0,
     };
   },
   computed: {
@@ -70,6 +72,7 @@ export default {
       }
       return active;
     },
+
   },
   watch: {
     // 滚动
@@ -106,7 +109,18 @@ export default {
     // 处理收到的消息
     getMessage(msg){
       this.taleList.push(msg)
+    },
+    // 计算 未读数据 提供给tabs 显示
+    calcUnreadInstances(isForceUpdate = false){
+       let el =  this.$refs.chatList;
+       this.unread =el.unread
     }
+  },
+    mounted() {
+    this.calcUnreadInstances();
+  },
+  updated() {
+    this.calcUnreadInstances();
   },
   render(h) {
     let { chat,active, taleList, handleEnter } = this;

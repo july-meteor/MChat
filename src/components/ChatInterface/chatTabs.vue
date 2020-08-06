@@ -32,25 +32,39 @@ export default {
     bindClick(event, data) {
       this.$emit("click", { event, data });
     },
+    // 处理未读信息
+    handleUnread() {},
   },
   render(h) {
     let { panes, stickyTop, stickyActive, handleScroll, bindClick } = this;
     // 标签组件生成
     const el_chat_tabs = this._l(panes, (pane, index) => {
-      const { active, chat } = pane;
+      const { active, chat, unread } = pane;
       const { name, id, type, avatar } = chat;
 
       let tabName = name + id + index;
       pane.index = `${index}`;
+      // 未读
+
       //对话是否激活
-
       let label = name;
-
       // let recordImg = pane.recording
       //   ? constant.btnRecording
       //   : constant.btnRecord;
 
       const tabindex = active ? 0 : -1;
+
+      const el_tab_lable = <span class="im-label"> {label}</span>;
+      const el_unread_badge = unread > 0? (<span class="badge">{unread}</span>):'';
+      // if (unread > 0) {
+      //   el_tab_lable = (
+      //     <el-badge value={unread}>
+      //       <span> {label}</span>
+      //     </el-badge>
+      //   );
+      // } else {
+      //   el_tab_lable = <span> {label}</span>;
+      // }
 
       return (
         <li
@@ -61,13 +75,14 @@ export default {
             bindClick("tabClick", { pane, ev });
           }}
         >
+          {el_unread_badge}
           <img
             src={avatar}
             on-click={(ev) => {
               bindClick("tabClick", { pane, ev });
             }}
           />
-          <span> {label}</span>
+          {el_tab_lable}
           <i
             class="im-icon el-icon-error"
             on-click={(ev) => {
@@ -110,12 +125,11 @@ export default {
             top: stickyTop + "px",
           }}
         >
-          <span class="im-box-setwin " on-click={() => {}}>
+          <span class="im-label im-box-setwin " on-click={() => {}}>
             <a class="im-btn-min" href="javascript:;">
               <cite></cite>
             </a>
           </span>
-
           {el_icon}
         </li>
         {el_chat_tabs}
@@ -124,3 +138,24 @@ export default {
   },
 };
 </script>
+
+
+<style >
+.badge {
+  position: absolute;
+  top: 12px;
+  left: 10px;
+  transform: translateY(-50%) translateX(100%);
+  background-color: #f56c6c;
+  border-radius: 10px;
+  color: #fff;
+  display: inline-block;
+  font-size: 12px;
+  height: 18px;
+  line-height: 18px;
+  padding: 0 6px;
+  text-align: center;
+  white-space: nowrap;
+  border: 1px solid #fff;
+}
+</style>

@@ -123,6 +123,7 @@ export default {
     calcPaneInstances(isForceUpdate = false) {
       //绕了一圈最终决定由chat-box 来决定 chat-tabs的属性
       if (this.$children) {
+   
         const childPanes = this.$children.filter(
           (item) =>
             item.$vnode.tag &&
@@ -145,7 +146,7 @@ export default {
     },
   },
   render(h) {
-    let { handPanesDrag, config, panes, handleEvent, handleEnter } = this;
+    let { handPanesDrag, config, panes, handleEvent, handleEnter,calcPaneInstances } = this;
     const { mine, chats } = config;
 
     // 窗口页面
