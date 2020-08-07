@@ -1,6 +1,7 @@
 /**
  * 用得到的工具类
  */
+import emojis from "@/utils/emoji";
 
 
 //转换 聊天内容
@@ -22,9 +23,9 @@ function ConvertContext(content) {
             if (!href) return str;
             return '<a class="layui-layim-file" href="' + href + '" download target="_blank"><i class="layui-icon">&#xe61e;</i><cite>' + (text || href) + '</cite></a>';
         })
-        .replace(/face\[([^\s\[\]]+?)\]/g, function (face) {  //转义表情
-            var alt = face.replace(/^face/g, '');
-            return '<img alt="' + alt + '" title="' + alt + '" src="' + faces[alt] + '">';
+        .replace(/emoji\[([^\s\[\]]+?)\]/g, function (emoji) {  //转义表情
+            var alt = emoji.replace(/^emoji/g, '');
+            return '<img alt="' + alt + '" title="' + alt + '" src="' + emojis[alt] + '">';
         }).replace(/audio\[([^\s]+?)\]/g, function (i) {
             return '<div data-src="' + i.replace(/(^audio\[)|(\]$)/g, "") + '"> <audio  controls  src="' + i.replace(/(^audio\[)|(\]$)/g, "") + '" ></audio></div>'
         }).replace(/video\[([^\s]+?)\]/g, function (i) {

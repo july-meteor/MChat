@@ -8,6 +8,7 @@ import { constant } from "../../const";
 // 聊天内容框
 import chatList from "./chatList";
 import enterBox from "./enterBox";
+import tools from "./tools";
 
 // 频道模型
 const default_chat = {
@@ -26,9 +27,14 @@ export default {
   components: {
     chatList,
     enterBox,
+    tools,
   },
   inject: ["rootChat"],
   props: {
+    config: {
+      type: Object,
+      default: () => {},
+    },
     chat: {
       type: Object,
       default: () => {},
@@ -47,7 +53,10 @@ export default {
     width: {
       default: "550px",
     },
-    config: {},
+    //  输入属性 预留给上层模块
+    value: {
+      default: "",
+    },
   },
   data() {
     return {
@@ -61,6 +70,7 @@ export default {
       scrollToButton: false,
       // 未读
       unread: 0,
+      content: "",
     };
   },
   computed: {
@@ -82,13 +92,13 @@ export default {
     },
     value: {
       handler() {
-        this.msg = this.value;
+        this.content = this.value;
       },
       immediate: true,
     },
-    msg: {
+    content: {
       handler() {
-        this.$emit("input", this.msg);
+        this.$emit("input", this.content);
       },
       immediate: true,
     },
@@ -102,12 +112,15 @@ export default {
   },
 
   methods: {
-    handleEnter(msg) {
-      this.$emit("enter", msg);
+    handleEnter(message) {
+      this.$emit("enter", message);
     },
     // 处理收到的消息
-    getMessage(msg) {
-      this.taleList.push(msg);
+    getMessage(message) {
+      this.taleList.push(message);
+    },
+    bindEmoji(emoji) {
+      this.content += emoji;
     },
     handleUnread(count) {
       if (this.active) {
@@ -120,7 +133,15 @@ export default {
   mounted() {},
   updated() {},
   render(h) {
-    let { chat, active, taleList, handleEnter, handleUnread } = this;
+    let {
+      chat,
+      config,
+      active,
+      taleList,
+      bindEmoji,
+      handleEnter,
+      handleUnread,
+    } = this;
     let { name, type, avatar, id } = chat;
 
     let el_chat, el_chat_titel, data_chat_list, el_chat_footer, el_chat_tool;
@@ -149,12 +170,26 @@ export default {
         },
       },
     };
+    var self = this;
+    let data_tools_bar = {
+      props: {
+        config,
+      },
+      on: {
+        emoji: function (emoji) {
+          bindEmoji(emoji);
+        },
+      },
+    };
 
     let data_enter_box = {
       props: {
-        value: "",
+        value: self.content,
       },
       on: {
+        input: function (value) {
+          self.content = value;
+        },
         submit: function (data) {
           handleEnter(data);
         },
@@ -168,7 +203,7 @@ export default {
           listActive: false,
         }}
       >
-        <div class="im-chat-toolbar"></div>
+        <tools {...data_tools_bar}></tools>
         <enter-box {...data_enter_box}></enter-box>
       </div>
     );

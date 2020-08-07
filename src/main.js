@@ -1,10 +1,12 @@
+import 'element-ui/lib/theme-chalk/index.css';
+import './styles/im.scss'
+import './styles/index.scss'
+
+import './icons' // icon 图标
 import Vue from 'vue'
 import App from './App.vue'
 import ElementUI from 'element-ui';
 import MChat from '@/components'
-import 'element-ui/lib/theme-chalk/index.css';
-import './styles/im.scss'
-import './styles/index.scss'
 
 Vue.use(ElementUI)
 

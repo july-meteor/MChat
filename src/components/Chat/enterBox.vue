@@ -1,4 +1,5 @@
 <script>
+import { unwatchFile } from 'fs';
 export default {
   name: "MChat-enter-box",
   componentName: "MChatEnterBox",
@@ -13,43 +14,48 @@ export default {
   },
   data() {
     return {
-      content: undefined,
-      recording: false,
-      
+      currentContent: '',
     };
+  },
+  watch: {
+    value: {
+      handler() {
+        this.currentContent = this.value;
+      },
+      immediate: true,
+    },
+    currentContent: {
+      handler(newval) {
+        const msg = newval;
+        this.$emit("input", msg);
+      },
+      immediate: true,
+    },
+  },
+  created(){
+
   },
   methods: {
     // 数据格式往上抛
     handleSend() {
-      // if (!this.content || this.content.length < 1) return;
-      // const msg = {
-      //     username: this.mine.username,
-      //     avatar: this.mine.avatar, //头像
-      //     channel: this.id, // chat的id // 如果当前chat是私聊则为私聊目标的id
-      //     fromid: this.mine.id, //发起人id
-      //     type: this.type, //
-      //     mine: true, //是不是自己发的
-      //     content: this.content , // 内容
-      //     timestamp: new Date() //发起的时间戳
-      // };
-   
-      this.$emit("submit",  this.content);
+      if (!this.currentContent) return;
+      this.$emit("submit", this.currentContent);
       this.$nextTick(() => {
-        this.content = "";
+        this.currentContent = "";
       });
     },
   },
   render(h) {
-    let { value, handleSend, content, recording} = this;
+    let { value, handleSend, currentContent, placeholder, recording } = this;
     var self = this;
-
     const textareaVnode = h("textarea", {
       domProps: {
-        value: self.content,
+        value: self.currentContent,
+        placeholder,
       },
       on: {
         input: function (event) {
-          self.content = event.target.value;
+          self.currentContent = event.target.value;
         },
         keydown: function (ev) {
           let keyCode = ev.keyCode;
@@ -59,7 +65,7 @@ export default {
           //  }
           if (keyCode === 13) {
             if (ctrlKey) {
-              self.content += "\n";
+              self.currentContent += "\n";
             } else {
               ev.preventDefault();
               handleSend();
@@ -88,7 +94,6 @@ export default {
               style={{ "background-color": recording ? "red" : "" }}
             >
               PTT
-           
             </span>
             <span
               class="im-btn-send"

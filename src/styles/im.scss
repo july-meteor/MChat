@@ -706,16 +706,26 @@ body {
             line-height: 38px;
             font-size: 0;
 
-            span {
-                position: relative;
-                margin: 0 10px;
-                display: inline-block;
-                *display: inline;
-                *zoom: 1;
-                vertical-align: top;
-                font-size: 24px;
-                cursor: pointer;
+            .im-chat-tools {
+                text-align: left;
+                padding-left: 8px;
+                box-sizing: border-box;
+                display: flex;
+                align-items: center;
+                height: 30px;
+
+                span {
+                    position: relative;
+                    margin: 0 10px;
+                    display: inline-block;
+                    *display: inline;
+                    *zoom: 1;
+                    vertical-align: top;
+                    font-size: 24px;
+                    cursor: pointer;
+                }
             }
+
         }
 
         //输入框
