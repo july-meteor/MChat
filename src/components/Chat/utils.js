@@ -15,7 +15,7 @@ function ConvertContext(content) {
         .replace(/@(\S+)(\s+?|$)/g, '@<a href="javascript:;">$1</a>$2') //转义@
         .replace(/\s{2}/g, '&nbsp') //转义空格
         .replace(/img\[([^\s]+?)\]/g, function (img) {  //转义图片
-            return '<img class="layui-layim-photos" src="' + img.replace(/(^img\[)|(\]$)/g, '') + '">';
+            return '<img class="im-content-img" src="' + img.replace(/(^img\[)|(\]$)/g, '') + '">';
         })
         .replace(/file\([\s\S]+?\)\[[\s\S]*?\]/g, function (str) { //转义文件
             var href = (str.match(/file\(([\s\S]+?)\)\[/) || [])[1];
@@ -29,7 +29,7 @@ function ConvertContext(content) {
         }).replace(/audio\[([^\s]+?)\]/g, function (i) {
             return '<div data-src="' + i.replace(/(^audio\[)|(\]$)/g, "") + '"> <audio  controls  src="' + i.replace(/(^audio\[)|(\]$)/g, "") + '" ></audio></div>'
         }).replace(/video\[([^\s]+?)\]/g, function (i) {
-            return '<div class="layui-unselect layui-layim-video" layim-event="playVideo" data-src="' + i.replace(/(^video\[)|(\]$)/g, "") + '"><i class="layui-icon">&#xe652;</i></div>'
+            return '<video controls="controls" src="' + i.replace(/(^video\[)|(\]$)/g, "") + '"></video>'
         }).replace(/a\([\s\S]+?\)\[[\s\S]*?\]/g, function (str) { //转义链接
             var href = (str.match(/a\(([\s\S]+?)\)\[/) || [])[1];
             var text = (str.match(/\)\[([\s\S]*?)\]/) || [])[1];

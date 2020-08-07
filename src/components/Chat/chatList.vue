@@ -283,6 +283,7 @@ export default {
         </li>
       );
     });
+    
 
     const el_history_log = <div>查看更多消息</div>;
 
@@ -334,7 +335,7 @@ export default {
 <style >
 .iScrollVerticalScrollbar.iScrollLoneScrollbar {
   z-index: 1 !important;
-  right: 10px !important;
+  right: 13px !important;
   margin-top: 11px;
   margin-bottom: 11px;
 }
@@ -380,13 +381,13 @@ export default {
   .up {
     position: absolute;
     cursor: pointer;
-    right: 5px;
+    right: 8px;
     top: 0px;
   }
   .down {
     position: absolute;
     cursor: pointer;
-    right: 5px;
+    right: 8px;
     bottom: 0px;
   }
   &:hover {

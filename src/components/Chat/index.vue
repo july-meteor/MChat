@@ -157,7 +157,6 @@ export default {
         </div>
       </div>
     );
-
     // chat list  的数据
     data_chat_list = {
       props: {

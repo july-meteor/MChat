@@ -12,9 +12,7 @@ export default {
         //获取主面板列表信息，下文会做进一步介绍
         config: {
           // 是否有下拉按钮
-          downBtn:true,
-          
-
+          downBtn: true,
         },
         //我的信息
         mine: {
@@ -33,13 +31,13 @@ export default {
           {
             id: 1,
             name: "测试1",
-            type: "friend",
+            type: "group",
             avatar: "http://tp1.sinaimg.cn/5619439268/180/40030060651/1",
           },
           {
             id: 2,
             name: "测试组",
-            type: "group",
+            type: "friend",
             avatar: "http://tp1.sinaimg.cn/5619439268/180/40030060651/1",
           },
         ],
@@ -81,7 +79,6 @@ export default {
     },
 
     sendMessage(data) {
-      
       const { mine, to, content, timestamp } = data;
       let message = {
         //消息来源用户名
@@ -104,8 +101,48 @@ export default {
         timestamp,
       };
 
-       this.$im.emit("getMessage",message)
+      this.$im.emit("getMessage", message);
     },
+  },
+  mounted() {
+    let message = [
+      {
+        username: "小白",
+        avatar: "/static/avatar/temp1.jpg",
+        id: 1,
+        type: "group",
+        content: "img[/static/emoticon/emoticon_1.jpg]",
+        cid: 0,
+        mine: false,
+        fromid: 2,
+        timestamp: new Date(),
+      },
+      {
+        username: "小奶",
+        avatar: "/static/avatar/temp2.jpeg ",
+        id: 1,
+        type: "group",
+        content: "video[https://www.w3school.com.cn/i/movie.mp4]",
+        cid: 0,
+        mine: false,
+        fromid: 3,
+        timestamp: new Date(),
+      },
+      {
+        username: "老八",
+        avatar: "/static/avatar/temp2.jpeg ",
+        id: 1,
+        type: "group",
+        content: "audio[https://www.w3school.com.cn/i/horse.mp3]",
+        cid: 0,
+        mine: false,
+        fromid: 3,
+        timestamp: new Date(),
+      },
+    ];
+    message.forEach((mes) => {
+      this.$im.emit("getMessage", mes);
+    });
   },
 };
 </script>

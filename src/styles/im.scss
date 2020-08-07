@@ -620,9 +620,23 @@ body {
                     color: $contentText;
                 }
 
-                img {
-                    max-width: 100%;
-                    vertical-align: middle
+    
+
+                .im-content-img , .im-content-video{
+                    position: relative;
+                    max-width: 250px;
+                    min-width: 200px;
+                    width: 100%;
+                    margin: 10px 0;
+                    border: 1px solid #eee;
+                    overflow: hidden;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    display: block;
+                }
+                audio{
+                    width: 20rem;
+                    height: 36px;
                 }
 
                 &:hover {
