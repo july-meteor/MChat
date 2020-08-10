@@ -122,6 +122,10 @@ export default {
     },
   },
   methods: {
+    // 拉取历史记录
+    handleHistory() {
+      this.$emit("loadHistory");
+    },
     /******  滚动条设置 ******/
 
     createScroll() {
@@ -149,7 +153,6 @@ export default {
       // scroll done callback
       this.scroll.on("scrollEnd", function () {
         that.scrollTop();
-
         if (that.historyLoding) return;
         that.scroll.savePosition();
         that.scroll.read();
@@ -256,9 +259,11 @@ export default {
       open,
       unread,
       handleOpen,
+      historyLoding,
       scrollUp,
       scrollBottom,
       scrollTop,
+      handleHistory,
     } = this;
 
     const el_record_list = this._l(list, (item, index) => {
@@ -283,9 +288,15 @@ export default {
         </li>
       );
     });
-    
 
-    const el_history_log = <div>查看更多消息</div>;
+    let el_history_log;
+    if (historyLoding) {
+      el_history_log = (
+        <div class="history_lable" on-click={(ev) => handleHistory()}>
+          查看更多消息
+        </div>
+      );
+    }
 
     const el_down_button = (
       <div class="downBtn">
@@ -301,6 +312,7 @@ export default {
         }}
         ref="scroller"
       >
+        {el_history_log}
         <ul ref="main">{el_record_list}</ul>
 
         <span
@@ -332,66 +344,12 @@ export default {
 };
 </script>
 
+
 <style >
 .iScrollVerticalScrollbar.iScrollLoneScrollbar {
   z-index: 1 !important;
   right: 13px !important;
   margin-top: 11px;
   margin-bottom: 11px;
-}
-</style>
-<style  scoped lang="scss">
-.downBtn {
-  position: absolute;
-  cursor: pointer;
-  right: 1rem;
-  width: 2rem;
-  height: 2rem;
-  bottom: 2rem;
-  // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
-  &::before {
-    content: "V";
-    position: absolute;
-    background: rgba(204, 204, 204, 0.2);
-    width: 2rem;
-    height: 2rem;
-    line-height: 2rem;
-    text-align: center;
-    border-radius: 50%;
-    top: 60%;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  span {
-    background: #409eff;
-    padding: 0.1rem 0.5rem;
-    font-size: 0.7rem;
-    border-radius: 0.5rem;
-    color: #fff;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-}
-
-.scrollButton {
-  width: 9px;
-  height: 9px;
-  .up {
-    position: absolute;
-    cursor: pointer;
-    right: 8px;
-    top: 0px;
-  }
-  .down {
-    position: absolute;
-    cursor: pointer;
-    right: 8px;
-    bottom: 0px;
-  }
-  &:hover {
-    color: #409eff;
-  }
 }
 </style>

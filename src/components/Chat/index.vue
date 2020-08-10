@@ -112,6 +112,16 @@ export default {
   },
 
   methods: {
+        // 拉取历史记录
+    loadHistory(){
+      let that = this
+      //
+      this.$emit("loadHistory", function(list){
+        list.forEach(item => {
+             that.taleList.unshift(item)
+        });       
+      })
+    },
     handleEnter(message) {
       this.$emit("enter", message);
     },
@@ -141,6 +151,7 @@ export default {
       bindEmoji,
       handleEnter,
       handleUnread,
+      loadHistory,
     } = this;
     let { name, type, avatar, id } = chat;
 
@@ -167,6 +178,9 @@ export default {
         messageUnread: function (count) {
           handleUnread(count);
         },
+        loadHistory:function(){
+          loadHistory()
+        }
       },
     };
     var self = this;

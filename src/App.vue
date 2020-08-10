@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="wrapper">
-    <MChat-index :config="config" @talkEvent="talkEvent" @sendMessage="sendMessage"></MChat-index>
+    <MChat-index :config="config" @talkEvent="talkEvent" @sendMessage="sendMessage" @loadHistory="handleHistory"></MChat-index>
   </div>
 </template>
 <script>
@@ -60,6 +60,24 @@ export default {
     };
   },
   methods: {
+    handleHistory(callBack){
+     const history =[
+         {
+        username: "历史记录",
+        avatar: "/static/avatar/temp2.jpeg ",
+        id: 1,
+        type: "group",
+        content: "audio[https://www.w3school.com.cn/i/horse.mp3]",
+        cid: 0,
+        mine: false,
+        fromid: 3,
+        timestamp: new Date(),
+      },
+     ]
+     callBack(history)
+   
+
+    },
     talkEvent({ event, data }) {
       switch (event) {
         case "removeChat":

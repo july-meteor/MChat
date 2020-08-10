@@ -45,6 +45,9 @@ export default {
   },
 
   methods: {
+    loadHistory(callBack) {
+      this.$emit("loadHistory", callBack);
+    },
     // 收到消息
     handleMessage(message) {
       this.panes.forEach((item) => {
@@ -123,7 +126,6 @@ export default {
     calcPaneInstances(isForceUpdate = false) {
       //绕了一圈最终决定由chat-box 来决定 chat-tabs的属性
       if (this.$children) {
-   
         const childPanes = this.$children.filter(
           (item) =>
             item.$vnode.tag &&
@@ -146,7 +148,15 @@ export default {
     },
   },
   render(h) {
-    let { handPanesDrag, config, panes, handleEvent, handleEnter,calcPaneInstances } = this;
+    let {
+      handPanesDrag,
+      config,
+      panes,
+      handleEvent,
+      handleEnter,
+      calcPaneInstances,
+      loadHistory,
+    } = this;
     const { mine, chats } = config;
 
     // 窗口页面
@@ -160,6 +170,9 @@ export default {
         on: {
           enter: function (content) {
             handleEnter(chat, content);
+          },
+          loadHistory: function (callBack) {
+            loadHistory(callBack);
           },
         },
       };
