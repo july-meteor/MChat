@@ -12,6 +12,8 @@
           </span>
         </div>
       </li>
+    </ul>
+    <ul class="list-box">
       <li v-for="(item,k) in list" :key="k">
         <user-item :item="item" @click="bindClick"></user-item>
       </li>
@@ -35,9 +37,30 @@ export default {
     return {};
   },
   methods: {
-    bindClick(type) {
-      this.$emit("click", type);
+    bindClick(event) {
+      this.$emit("click", event);
     },
   },
 };
 </script>
+
+<style>
+*::-webkit-scrollbar {
+  /*滚动条整体样式*/
+  width: 5px;
+  height: 5px;
+}
+
+*::-webkit-scrollbar-thumb {
+  /*滚动条里面小方块*/
+  border-radius: 5px;
+  height: 10px;
+  background: #9b9b9b;
+}
+
+*::-webkit-scrollbar-track {
+  /*滚动条里面轨道*/
+  border-radius: 5px;
+  background: #ededed;
+}
+</style>

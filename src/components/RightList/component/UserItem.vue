@@ -1,5 +1,5 @@
 <template>
-  <div class="im-user-item">
+  <div class="im-user-item" @click="bindClick({ key:'user', value: item })">
     <img
       v-if="item.avatar"
       :src="item.avatar"
@@ -8,8 +8,7 @@
       @click="bindClick({ key:'cover', value: item })"
     />
     <div class="im-user-info">
-      <p class="name" @click="bindClick({ key:'name', value: item })">{{item.name}}</p>
-      <p class="dept" @click="bindClick({ key:'dept', value: item })">{{item.dept}}</p>
+      <p>{{item.name}}</p>
     </div>
   </div>
 </template>

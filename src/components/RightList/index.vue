@@ -1,12 +1,23 @@
 <template>
   <div>
-    <notice-box :config="notices"></notice-box>
-    <user-list :list="userList"></user-list>
+    <notice-box :items="notices" @click="bindClick"></notice-box>
+    <user-list :list="userList" @click="bindClick"></user-list>
   </div>
 </template>
 <script>
 import NoticeBox from "./component/NoticeBox";
 import UserList from "./component/UserList";
+
+/**
+ *  开发思路
+ * 1、内部维护 list 通过提供方法来修改 内部数据
+ *    这种方案存在一种问题，如果方法不够全面则会造成封装残缺
+ * 2、提供基础method及view mode 由上层提供
+ */
+
+function noop(){
+  return []
+}
 
 export default {
   name: "chat-right-list",
@@ -16,71 +27,46 @@ export default {
     UserList,
   },
   props: {
-    config: {},
+    // config: {},
+    // getUserList: {
+    //   type: Function,
+    //   default: () => {},
+    // },
+    // getNotics: {
+    //   type: Function,
+    //   default: () => {},
+    // },
+    notices:{
+      type: Array,
+      default:noop
+    },
+    userList:{
+    type:Array,
+      default:noop
+    }
   },
   data() {
     return {
-      notices: {},
-      userList: [],
+
     };
   },
   created() {
-    // const
-    this.fetchUserList();
-    this.fetchNotics();
+    // 放弃方案一
+    // this.handleUserList();
+    // this.handleNotices();
   },
   methods: {
-    fetchNotics(id) {
-      let notics = [
-        {
-          id: 1,
-          type: "文件",
-          title: "RocketMQ原理.dock",
-        },
-        {
-          id: 2,
-          type: "公告",
-          title: "公主连接Rank推荐",
-        },
-      ];
-      this.notices = notics;
+    bindClick(event) {
+      this.$emit("click", event);
     },
-    fetchUserList(id) {
-      // do something
-      let list = [
-        {
-          id: 1,
-          name: "七月",
-          type: "",
-          avatar: "/static/avatar/avatar_meteor.png",
-        },
-        {
-          id: 1,
-          name: "初音",
-          type: "",
-          avatar: "/static/avatar/初音.png",
-        },
-        {
-          id: 2,
-          name: "雪",
-          type: "",
-          avatar: "/static/avatar/雪.png",
-        },
-        {
-          id: 3,
-          name: "可可罗",
-          type: "",
-          avatar: "/static/avatar/可可罗.png",
-        },
-        {
-          id: 4,
-          name: "栞",
-          type: "",
-          avatar: "/static/avatar/栞.png",
-        },
-      ];
-      this.userList = list;
-    },
+    // handleNotices() {
+    //   let list = this.getNotics(this.config);
+    //   this.notices = list;
+    // },
+    // handleUserList() {
+    //   let list = this.getUserList(this.config);
+    //   this.userList = list;
+    // },
   },
 };
 </script>

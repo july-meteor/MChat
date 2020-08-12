@@ -1,10 +1,11 @@
 <template>
   <div>
-    <slot :props="props"></slot>
+    <slot :chat="data"></slot>
   </div>
 </template>
 <script>
 import { compose, mergeOptions } from "./util";
+
 export default {
   name: "chat-right-box",
   componentName: "ChatRightBox",
@@ -16,7 +17,7 @@ export default {
   },
   data() {
     return {
-      props: {},
+      data: {},
     };
   },
   computed: {
@@ -28,16 +29,13 @@ export default {
   },
   created() {
     const { chat, index } = this.chat;
-    //默认属性
-    const defaluts = {
-      // 会话id
-      id: chat.id,
-      // 会话名称
-      name: chat.name,
-      type: chat.type,
-      avatar: chat.avatar,
-    };
-    this.props = defaluts;
+
+       //基本参数
+   const basicProps = ['columnKey', 'label', 'className', 'labelClassName', 'type', 'renderHeader', 'formatter', 'fixed', 'resizable'];
+    let data = this.getPropsData(basicProps)
+    data = mergeOptions(chat, data);
+    this.data = data;
+  
   },
   methods: {
     // 组装 props数据

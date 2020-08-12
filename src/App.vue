@@ -9,13 +9,15 @@
     >
       <chat-right-box>
         <template slot-scope="props">
-          <chat-right-list :config="props.props"></chat-right-list>
+          <chat-right-list  :notices='props.chat.notices' :userList="props.chat.userList"  @click="handleRightEvent"></chat-right-list>
         </template>
       </chat-right-box>
     </MChat-index>
   </div>
 </template>
 <script>
+import CONST from "./constant";
+
 export default {
   name: "app",
   data() {
@@ -27,51 +29,27 @@ export default {
           downBtn: true,
         },
         //我的信息
-        mine: {
-          // 昵称
-          username: "七月",
-          // 用户id
-          id: "10001",
-          //状态
-          status: "online",
-          //签名
-          sign: "与其感慨路难行,不如马上出发！",
-          avatar: "/static/avatar/avatar_meteor.png",
-        },
+        mine: CONST.mine,
         //会话
-        chats: [
-          {
-            id: 1,
-            name: "测试1",
-            type: "group",
-            avatar: "http://tp1.sinaimg.cn/5619439268/180/40030060651/1",
-          },
-          // {
-          //   id: 2,
-          //   name: "测试组",
-          //   type: "friend",
-          //   avatar: "http://tp1.sinaimg.cn/5619439268/180/40030060651/1",
-          // },
-        ],
+        chats: CONST.chats,
       },
     };
   },
   methods: {
+    fetchNotices() {
+      let list = CONST.notice_list;
+      return list;
+    },
+    fetchUserList(config) {
+      let list = CONST.user_list;
+      return list;
+    },
+    handleRightEvent(event) {
+      console.log("右边框事件", event);
+    },
     handleHistory(callBack) {
-      const history = [
-        {
-          username: "历史记录",
-          avatar: "/static/avatar/temp2.jpeg ",
-          id: 1,
-          type: "group",
-          content: "audio[https://www.w3school.com.cn/i/horse.mp3]",
-          cid: 0,
-          mine: false,
-          fromid: 3,
-          timestamp: new Date(),
-        },
-      ];
-      callBack(history);
+      let list = CONST.history;
+      callBack(list);
     },
     talkEvent({ event, data }) {
       switch (event) {
@@ -118,41 +96,7 @@ export default {
     },
   },
   mounted() {
-    let message = [
-      {
-        username: "小白",
-        avatar: "/static/avatar/temp1.jpg",
-        id: 1,
-        type: "group",
-        content: "img[/static/emoticon/emoticon_1.jpg]",
-        cid: 0,
-        mine: false,
-        fromid: 2,
-        timestamp: new Date(),
-      },
-      {
-        username: "小奶",
-        avatar: "/static/avatar/temp2.jpeg ",
-        id: 1,
-        type: "group",
-        content: "video[https://www.w3school.com.cn/i/movie.mp4]",
-        cid: 0,
-        mine: false,
-        fromid: 3,
-        timestamp: new Date(),
-      },
-      {
-        username: "老八",
-        avatar: "/static/avatar/temp2.jpeg ",
-        id: 1,
-        type: "group",
-        content: "audio[https://www.w3school.com.cn/i/horse.mp3]",
-        cid: 0,
-        mine: false,
-        fromid: 3,
-        timestamp: new Date(),
-      },
-    ];
+    let message = CONST.test_send_msg;
     message.forEach((mes) => {
       this.$im.emit("getMessage", mes);
     });
