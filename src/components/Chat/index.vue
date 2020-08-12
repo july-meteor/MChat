@@ -71,6 +71,7 @@ export default {
       // 未读
       unread: 0,
       content: "",
+      rightBox: true,
     };
   },
   computed: {
@@ -112,15 +113,18 @@ export default {
   },
 
   methods: {
-        // 拉取历史记录
-    loadHistory(){
-      let that = this
+    handleRighBox() {
+      this.rightBox = !this.rightBox;
+    },
+    // 拉取历史记录
+    loadHistory() {
+      let that = this;
       //
-      this.$emit("loadHistory", function(list){
-        list.forEach(item => {
-             that.taleList.unshift(item)
-        });       
-      })
+      this.$emit("loadHistory", function (list) {
+        list.forEach((item) => {
+          that.taleList.unshift(item);
+        });
+      });
     },
     handleEnter(message) {
       this.$emit("enter", message);
@@ -144,10 +148,13 @@ export default {
   updated() {},
   render(h) {
     let {
+      rootChat,
       chat,
       config,
       active,
       taleList,
+      rightBox,
+      handleRighBox,
       bindEmoji,
       handleEnter,
       handleUnread,
@@ -178,9 +185,9 @@ export default {
         messageUnread: function (count) {
           handleUnread(count);
         },
-        loadHistory:function(){
-          loadHistory()
-        }
+        loadHistory: function () {
+          loadHistory();
+        },
       },
     };
     var self = this;
@@ -213,12 +220,33 @@ export default {
       <div
         class={{
           "im-chat-footer": true,
-          listActive: false,
+          listActive: rightBox,
         }}
       >
         <tools {...data_tools_bar}></tools>
         <enter-box {...data_enter_box}></enter-box>
       </div>
+    );
+
+    // const data_chat_right_box = {
+    //   props: {
+    //     display: rightBox,
+    //   },
+    // };
+  
+  const el_right_box_slot = h('div', rootChat.$slots.default)
+
+    // 挂载到该目标上
+    const el_chat_right_box = (
+       <div
+        class={{
+          "im-chat-right-box": true,
+          display: rightBox,
+        }}
+      >
+      {el_right_box_slot}
+
+         </div>
     );
 
     el_chat = (
@@ -229,9 +257,25 @@ export default {
             display: active,
           }}
         >
+          {el_chat_right_box}
           {el_chat_titel}
           <chat-list {...data_chat_list}> </chat-list>
           {el_chat_footer}
+          <span
+            class={{
+              "im-chat-btn-expand": true,
+              close: rightBox,
+            }}
+            on-click={(ev) => handleRighBox()}
+          >
+            <i
+              class={{
+                "im-icon": true,
+                "el-icon-arrow-left": !rightBox,
+                "el-icon-arrow-right": rightBox,
+              }}
+            ></i>
+          </span>
         </div>
       </div>
     );

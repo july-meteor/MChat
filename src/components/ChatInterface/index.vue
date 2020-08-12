@@ -251,5 +251,10 @@ export default {
   min-width: 500px;
   width: 800px;
 }
+.hidden-right-box {
+  visibility: hidden;
+  position: absolute;
+  z-index: -1;
+}
 </style>
 

@@ -35,10 +35,11 @@ export default {
         height: "382px",
       }),
     },
+
   },
   data() {
     return {
-      open: false,
+
       load: false,
       scroll: null,
       scrollTimer: null,
@@ -122,6 +123,7 @@ export default {
     },
   },
   methods: {
+
     // 拉取历史记录
     handleHistory() {
       this.$emit("loadHistory");
@@ -247,7 +249,7 @@ export default {
     },
     /****标签标题 结束 ***/
 
-    handleOpen() {},
+ 
   },
   mounted() {
     this.createScroll();
@@ -256,14 +258,14 @@ export default {
   render(h) {
     let {
       list,
-      open,
+
       unread,
-      handleOpen,
       historyLoding,
       scrollUp,
       scrollBottom,
       scrollTop,
       handleHistory,
+
     } = this;
 
     const el_record_list = this._l(list, (item, index) => {
@@ -315,21 +317,6 @@ export default {
         {el_history_log}
         <ul ref="main">{el_record_list}</ul>
 
-        <span
-          on-click={(ev) => handleOpen()}
-          class={{
-            "im-chat-btn-expand": true,
-            close: open,
-          }}
-        >
-          <i
-            class={{
-              "im-icon": true,
-              "el-icon-arrow-left": !open,
-              "el-icon-arrow-right": open,
-            }}
-          ></i>
-        </span>
         <div class="scrollButton" on-click={(ev) => scrollUp()}>
           <i class="up  el-icon-arrow-up"></i>
         </div>

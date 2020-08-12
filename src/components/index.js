@@ -4,10 +4,12 @@
 import MChat from './Chat'
 import MChatPage from './ChatInterface'
 import EventHub from '../utils/eventHub'
+import MChatRightBox from './RightBox'
+import MChatRightList from './RightList'
 
 
 
-const components = [MChat, MChatPage]
+const components = [MChat, MChatPage, MChatRightBox, MChatRightList]
 
 
 

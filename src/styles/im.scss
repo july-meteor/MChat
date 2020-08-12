@@ -228,7 +228,7 @@ body {
     position: absolute;
     z-index: 1000;
     top: -80px;
-    width: 200px;
+    width: $tabsWidth;
     // height: 100%;
     background-color: $tabsbox;
     overflow: hidden;
@@ -321,7 +321,7 @@ body {
         }
 
         .im-label {
-            width: 100px;
+            width: $tabsLabel;
             padding-left: 10px;
             font-size: 16px;
             white-space: nowrap;
@@ -351,7 +351,7 @@ body {
 
 // 聊天主体css
 .im-chat-main {
-    margin-left: 200px;
+    margin-left: $tabsWidth;
 
     // 窗口 
     .im-pane-item {
@@ -363,20 +363,48 @@ body {
         &.display {
             display: block !important;
         }
+
+        .im-chat-btn-expand {
+            display: inline-block;
+            width: 10px;
+            height: 20px;
+            border-radius: 18px 0 0 18px;
+            background-color: #cecece;
+            top: 10px;
+            right: 1px;
+            position: absolute;
+            cursor: pointer;
+
+            &:hover {
+                background-color: #49A8FF;
+            }
+
+            &.close {
+                border-radius: 0 18px 18px 0;
+                right: $rightBoxCloseOffset;
+            }
+
+            .im-icon {
+                position: absolute;
+                top: 4px;
+                color: #fff;
+                right: -2px;
+                font-size: 11px;
+            }
+        }
     }
 
 
     // 用户信息框
-    .im-chat-userlist {
+    .im-chat-right-box {
         float: right;
         // width: $userlistWidt;
-        width: 188px;
+        width: $rightBoxWidth;
         height: 438px;
         border: solid 1px #EAEAEA;
         display: none;
 
-
-        &.listActive {
+        &.display {
             display: inline-block !important;
         }
 
@@ -390,30 +418,6 @@ body {
         }
 
 
-        .im-chat-input {
-            position: relative;
-            font-size: 14px;
-            display: inline-block;
-
-
-            .im-chat-search {
-                border: none;
-                padding: 5px;
-                width: 153px;
-                padding-left: 20px;
-            }
-
-            .im-chat-search-prefix {
-                position: absolute;
-                left: 2px;
-                top: 3px;
-                color: #c0c4cc;
-
-                .im-icon {
-                    font-size: 18px;
-                }
-            }
-        }
 
 
 
@@ -501,34 +505,6 @@ body {
         position: relative;
         background-color: $content;
 
-        .im-chat-btn-expand {
-            display: inline-block;
-            width: 10px;
-            height: 20px;
-            border-radius: 18px 0 0 18px;
-            background-color: #cecece;
-            top: 10px;
-            right: 1px;
-            position: absolute;
-            cursor: pointer;
-
-            &:hover {
-                background-color: #49A8FF;
-            }
-
-            &.close {
-                border-radius: 0 18px 18px 0;
-                right: 175px;
-            }
-
-            .im-icon {
-                position: absolute;
-                top: 4px;
-                color: #fff;
-                right: -3px;
-                font-size: 11px;
-            }
-        }
 
         ul {
             padding: 15px 20px 15px 15px;
@@ -620,9 +596,10 @@ body {
                     color: $contentText;
                 }
 
-    
 
-                .im-content-img , .im-content-video{
+
+                .im-content-img,
+                .im-content-video {
                     position: relative;
                     max-width: 250px;
                     min-width: 200px;
@@ -634,7 +611,8 @@ body {
                     cursor: pointer;
                     display: block;
                 }
-                audio{
+
+                audio {
                     width: 20rem;
                     height: 36px;
                 }
@@ -923,58 +901,155 @@ body {
     width: 2rem;
     height: 2rem;
     bottom: 2rem;
+
     // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
     &::before {
-      content: "V";
-      position: absolute;
-      background: rgba(204, 204, 204, 0.2);
-      width: 2rem;
-      height: 2rem;
-      line-height: 2rem;
-      text-align: center;
-      border-radius: 50%;
-      top: 60%;
-      left: 50%;
-      transform: translateX(-50%);
+        content: "V";
+        position: absolute;
+        background: rgba(204, 204, 204, 0.2);
+        width: 2rem;
+        height: 2rem;
+        line-height: 2rem;
+        text-align: center;
+        border-radius: 50%;
+        top: 60%;
+        left: 50%;
+        transform: translateX(-50%);
     }
+
     span {
-      background: #409eff;
-      padding: 0.1rem 0.5rem;
-      font-size: 0.7rem;
-      border-radius: 0.5rem;
-      color: #fff;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+        background: #409eff;
+        padding: 0.1rem 0.5rem;
+        font-size: 0.7rem;
+        border-radius: 0.5rem;
+        color: #fff;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
-  }
-  
-  .scrollButton {
+}
+
+.scrollButton {
     width: 9px;
     height: 9px;
+
     .up {
-      position: absolute;
-      cursor: pointer;
-      right: 8px;
-      top: 0px;
+        position: absolute;
+        cursor: pointer;
+        right: 8px;
+        top: 0px;
     }
+
     .down {
-      position: absolute;
-      cursor: pointer;
-      right: 8px;
-      bottom: 0px;
+        position: absolute;
+        cursor: pointer;
+        right: 8px;
+        bottom: 0px;
     }
+
     &:hover {
-      color: #409eff;
+        color: #409eff;
     }
-  }
-  .history_lable {
+}
+
+.history_lable {
     padding: 12px;
     color: #2c90ff;
     font-size: 12px;
+
     &:hover {
-      cursor: pointer;
+        cursor: pointer;
     }
-  }
-//单呼效果
+}
+
+//用户列表
+.im-user-list {
+    height: 70%;
+    text-align: left;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+
+    li {
+        height: 2rem;
+        line-height: 2rem;
+        padding: 0.2rem;
+        font-size: 12px;
+
+
+    }
+
+    .list-title {
+        color: black;
+        font-size: 13px;
+    }
+
+    .im-list-filter {
+        position: relative;
+        font-size: 14px;
+        display: inline-block;
+
+        .im-input-search {
+            border: none;
+            padding: 5px;
+            width: calc(100% - 25px);
+            padding-left: 20px;
+        }
+
+        .im-input-search-prefix {
+            position: absolute;
+            left: 2px;
+            top: 3px;
+            color: #c0c4cc;
+
+            .im-icon {
+                font-size: 18px;
+            }
+        }
+    }
+
+    .im-user-item {
+        display: flex;
+        align-items: center;
+        position: relative;
+
+        .im-user-avatar {
+            border-radius: 50%;
+            margin-right: 6px;
+            box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+        .im-user-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            &p {
+                margin: 0;
+                margin: 0;
+                padding: 0;
+                width: 175px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                text-align: left;
+                white-space: nowrap;
+                font-size: 13px;
+                cursor: pointer;
+
+                &:hover {
+                    opacity: 0.8;
+                }
+
+                &:last-child {
+                    font-size: 12px;
+                }
+
+            }
+
+        }
+
+    }
+}
+
+
+
+ 

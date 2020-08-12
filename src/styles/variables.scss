@@ -32,15 +32,21 @@ $btn:#F5F5F5;
 $btnColor:#606060;
 $btnHover:#129611;
 $btnHoverColor: #fff;
-
+$tabsWidth:180px;
+$tabsLabel:80px;
 
 $userlistWidt:198px;
 // 600
 $contentWidth:calc(590px - 198px);
 
-$foolterWidth:calc(600px - 200px);
+$chatMainOffset:180px;
 
+$foolterWidth:calc(600px - 130px);
 
+// 右边box 设置 相关
+$rightBoxWidth:148px;
+
+$rightBoxCloseOffset:139px;
 
 
 
@@ -68,6 +74,9 @@ $foolterWidth:calc(600px - 200px);
     contentWidth:$contentWidth;
     foolterWidth:$foolterWidth;
     userlistWidt:$userlistWidt;
-
+    tabsWidth:$tabsWidth;
+    tabsLabel:$tabsLabel;
+    rightBoxWidth:$rightBoxWidth;
+    rightBoxCloseOffset:$rightBoxCloseOffset;
 
   }
