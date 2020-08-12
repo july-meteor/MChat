@@ -1,7 +1,7 @@
 <template>
   <div>
     <notice-box :items="notices" @click="bindClick"></notice-box>
-    <user-list :list="userList" @click="bindClick"></user-list>
+    <user-list :list="_list" v-model="filter" @click="bindClick"></user-list>
   </div>
 </template>
 <script>
@@ -15,8 +15,8 @@ import UserList from "./component/UserList";
  * 2、提供基础method及view mode 由上层提供
  */
 
-function noop(){
-  return []
+function noop() {
+  return [];
 }
 
 export default {
@@ -27,27 +27,34 @@ export default {
     UserList,
   },
   props: {
-    // config: {},
-    // getUserList: {
-    //   type: Function,
-    //   default: () => {},
-    // },
-    // getNotics: {
-    //   type: Function,
-    //   default: () => {},
-    // },
-    notices:{
+    notices: {
       type: Array,
-      default:noop
+      default: noop,
     },
-    userList:{
-    type:Array,
-      default:noop
-    }
+    userList: {
+      type: Array,
+      default: noop,
+    },
+    filterNodeMethod: Function,
+  },
+  computed: {
+    _list() {
+      let list = this.userList;
+      let value = this.filter;
+      list.forEach((item) => {
+        if (this.filterNodeMethod) {
+          item.visible = this.filterNodeMethod(value, item);
+        } else {
+          item.visible = true;
+        }
+      });
+
+      return list;
+    },
   },
   data() {
     return {
-
+      filter: "",
     };
   },
   created() {

@@ -9,7 +9,7 @@
     >
       <chat-right-box>
         <template slot-scope="props">
-          <chat-right-list  :notices='props.chat.notices' :userList="props.chat.userList"  @click="handleRightEvent"></chat-right-list>
+          <chat-right-list  :notices='props.chat.notices' :userList="props.chat.userList"  :filter-node-method="filterUser"  @click="handleRightEvent"></chat-right-list>
         </template>
       </chat-right-box>
     </MChat-index>
@@ -36,6 +36,11 @@ export default {
     };
   },
   methods: {
+    filterUser(value,data){
+
+       if (!value) return true;
+        return data.name.indexOf(value) !== -1;
+    },
     fetchNotices() {
       let list = CONST.notice_list;
       return list;

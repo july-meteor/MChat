@@ -6,7 +6,7 @@
       </li>
       <li>
         <div class="im-list-filter">
-          <input class="im-input-search" placeholder="搜索成员" />
+          <input class="im-input-search" v-model="_value" placeholder="搜索成员" />
           <span class="im-input-search-prefix">
             <i class="im-icon el-icon-search"></i>
           </span>
@@ -14,8 +14,8 @@
       </li>
     </ul>
     <ul class="list-box">
-      <li v-for="(item,k) in list" :key="k">
-        <user-item :item="item" @click="bindClick"></user-item>
+      <li v-for="(item,k) in list" :key="k" v-show="item.visible">
+        <user-item :item="item" @click="bindClick" ></user-item>
       </li>
     </ul>
   </div>
@@ -32,9 +32,20 @@ export default {
       type: Array,
       default: () => [],
     },
+    value:{
+      type:String,
+      default:'',
+    }
   },
-  data() {
-    return {};
+  computed:{
+    _value:{
+      get(){
+        return this.value
+      },
+      set(val){
+        this.$emit('input',val)
+      }
+    }
   },
   methods: {
     bindClick(event) {
@@ -50,7 +61,11 @@ export default {
   width: 5px;
   height: 5px;
 }
-
+*::-webkit-scrollbar :hover{
+  /*滚动条整体样式*/
+  width: 5px;
+  height: 5px;
+}
 *::-webkit-scrollbar-thumb {
   /*滚动条里面小方块*/
   border-radius: 5px;

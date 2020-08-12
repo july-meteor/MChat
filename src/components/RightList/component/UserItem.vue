@@ -1,12 +1,6 @@
 <template>
   <div class="im-user-item" @click="bindClick({ key:'user', value: item })">
-    <img
-      v-if="item.avatar"
-      :src="item.avatar"
-      :style="coverSize"
-      class="im-user-avatar"
-      @click="bindClick({ key:'cover', value: item })"
-    />
+    <img v-if="item.avatar" :src="item.avatar" :style="coverSize" class="im-user-avatar" />
     <div class="im-user-info">
       <p>{{item.name}}</p>
     </div>

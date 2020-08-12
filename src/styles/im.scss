@@ -382,13 +382,16 @@ body {
             &.close {
                 border-radius: 0 18px 18px 0;
                 right: $rightBoxCloseOffset;
+                .im-icon {
+                    right: -1px;
+                }
             }
 
             .im-icon {
                 position: absolute;
                 top: 4px;
                 color: #fff;
-                right: -2px;
+                right: -3px;
                 font-size: 11px;
             }
         }
