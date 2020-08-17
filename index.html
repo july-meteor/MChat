@@ -6,54 +6,11 @@
   <meta name="renderer" content="webkit">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>泊舟调度台</title>
-  <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=LlYhbUhGhHD90jtH3szp5ay32STHVG9s"></script>
-  <script type="text/javascript"
-    src="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.js"></script>
-  <script type="text/javascript" src="http://api.map.baidu.com/library/GeoUtils/1.2/src/GeoUtils_min.js"></script>
-  <script type="text/javascript" src="//api.map.baidu.com/library/DistanceTool/1.2/src/DistanceTool_min.js"></script>
-  <script type="text/javascript" src="//api.map.baidu.com/library/RectangleZoom/1.2/src/RectangleZoom_min.js"></script>
-  <script type="text/javascript" src='http://localhost:39862/config.js'></script>
-  <link rel="stylesheet" href="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.css" />
+
 </head>
 
 <body>
-
-
   <div id="app"></div>
 </body>
 
-
 </html>
-<script language="javascript" type="text/javascript">
-
-  document.onkeydown = function () {
-
-    /*
-    
-    (ctrlKey == true && keyCode == 82) Ctrl+R ---刷新
-    
-    (keyCode == 116) F5 ---刷新
-    
-    (ctrlKey == true && keyCode == 116) Ctrl+F5 ---强制刷新
-    
-    */
-
-    //window.alert(event.keyCode);
-
-    var k = event.keyCode;
-
-    if ((event.ctrlKey == true && k == 82) || (k == 116) || (event.ctrlKey == true && k == 116)) {
-
-      //return (window.confirm("关闭?"));
-
-      event.keyCode = 0;
-
-      event.returnValue = false;
-
-      event.cancelBubble = true;
-
-    }
-
-  }
-
-</script>

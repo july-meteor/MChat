@@ -1,7 +1,7 @@
 {
-  "name": "Meteor-chat",
+  "name": "meteorChat",
   "version": "1.0.1",
-  "description": "Meteor-chat  可视化工具",
+  "description": "MeteorChat  聊天室UI组件",
   "author": "七月流星 <747718944@qq.com>",
   "license": "MIT",
   "scripts": {
@@ -14,16 +14,16 @@
   "keywords": [
     "vue",
     "element-ui",
-    "zookeeper",
-    "apache-curator",
-    "vue-element-admin"
+    "wechat",
+    "im",
+    "typescript"
   ],
   "repository": {
     "type": "git",
     "url": "git+"
   },
   "bugs": {
-    "url": "https://github.com/18106960985/meteor-curator/issues"
+    "url": "https://github.com/july-meteor/MChat/issues"
   },
   "dependencies": {
     "iscroll": "^5.2.0",

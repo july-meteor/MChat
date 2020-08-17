@@ -9,7 +9,12 @@
     >
       <chat-right-box>
         <template slot-scope="props">
-          <chat-right-list  :notices='props.chat.notices' :userList="props.chat.userList"  :filter-node-method="filterUser"  @click="handleRightEvent"></chat-right-list>
+          <chat-right-list
+            :notices="props.chat.notices"
+            :userList="props.chat.userList"
+            :filter-node-method="filterUser"
+            @click="handleRightEvent"
+          ></chat-right-list>
         </template>
       </chat-right-box>
     </MChat-index>
@@ -26,20 +31,19 @@ export default {
         //获取主面板列表信息，下文会做进一步介绍
         config: {
           // 是否有下拉按钮
-          downBtn: true,
+          downBtn: true
         },
         //我的信息
         mine: CONST.mine,
         //会话
-        chats: CONST.chats,
-      },
+        chats: CONST.chats
+      }
     };
   },
   methods: {
-    filterUser(value,data){
-
-       if (!value) return true;
-        return data.name.indexOf(value) !== -1;
+    filterUser(value, data) {
+      if (!value) return true;
+      return data.name.indexOf(value) !== -1;
     },
     fetchNotices() {
       let list = CONST.notice_list;
@@ -94,24 +98,43 @@ export default {
         //消息的发送者id（比如群组中的某个消息发送者），可用于自动解决浏览器多窗口时的一些问题
         fromid: mine.id,
         //服务端时间戳毫秒数。注意：如果你返回的是标准的 unix 时间戳，记得要 *1000
-        timestamp,
+        timestamp
       };
 
       this.$im.emit("getMessage", message);
-    },
+
+         let tempMsg = {
+        //消息来源用户名
+        username: '初音',
+        //消息来源用户头像
+        avatar:'/static/avatar/初音.png',
+        //消息的来源ID（如果是私聊，则是用户id，如果是群聊，则是群组id）
+        id: to.id,
+        //聊天窗口来源类型，从发送消息传递的to里面获取
+        type: to.type,
+        //消息内容
+        content:'您好！！',
+        //消息id，可不传。除非你要对消息进行一些操作（如撤回）
+        cid: 0,
+        //是否我发送的消息，如果为true，则会显示在右方
+        mine: false,
+        //消息的发送者id（比如群组中的某个消息发送者），可用于自动解决浏览器多窗口时的一些问题
+        fromid: 1001,
+        //服务端时间戳毫秒数。注意：如果你返回的是标准的 unix 时间戳，记得要 *1000
+        timestamp
+      };
+         this.$im.emit("getMessage", tempMsg);
+    }
   },
   mounted() {
     let message = CONST.test_send_msg;
-    message.forEach((mes) => {
+    message.forEach(mes => {
       this.$im.emit("getMessage", mes);
     });
   },
-  mounted() {},
+  mounted() {}
 };
 </script>
-
-
-
 
 <style lang="scss">
 #app {
