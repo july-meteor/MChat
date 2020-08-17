@@ -1,6 +1,6 @@
 <p align="center">
  <h1> <img width="45px" src="https://img-blog.csdnimg.cn/20181109170115221.jpg">
-MChat-Ari</h1>
+MChat-Air</h1>
 
 </p>
 
@@ -25,12 +25,10 @@ MChat-Ari</h1>
 
 ## 简介
 <P>
-<img src='../' />
+<img   width="450px"  hight="450px"   src='/demo_gif.gif' />
 </p>
 
 这是一款基于vue与elementu-ui开发的聊天室组件库，在样式上模仿了TIM及微信。在提供基础封装的同时，最大程度的增加扩展性。
-
-
 - [在线访问](http://111.230.210.81:7788/) 
 - [使用文档](https://blog.csdn.net/qq_16882073/article/details/83622399) 
 
