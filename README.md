@@ -24,9 +24,9 @@ MChat-Air</h1>
 
 
 ## 简介
-<P>
-![image](https://gitee.com/y747718944/MChat/blob/master/blob/demo_gif.gif)
-</p>
+
+![演示图](https://gitee.com/y747718944/MChat/blob/master/blob/demo_gif.gif)
+
 
 这是一款基于vue与elementu-ui开发的聊天室组件库，在样式上模仿了TIM及微信。在提供基础封装的同时，最大程度的增加扩展性。
 - [在线访问](http://111.230.210.81:7788/) 
